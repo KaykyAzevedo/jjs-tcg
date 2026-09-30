@@ -128,6 +128,9 @@
 .btn--danger { color: #fff; background: var(--c-danger); }
 .btn--danger:hover:not(:disabled) { box-shadow: 0 0 22px rgba(255, 84, 112, .5); }
 
+/* botões magnéticos: segue o mouse com no máximo 100ms de suavização */
+.btn[data-magnetic] { transition: transform .1s linear, box-shadow var(--dur) var(--ease-out), background-position .7s var(--ease-out), background-color var(--dur), border-color var(--dur), color var(--dur); }
+
 .btn--sm { --btn-h: 40px; font-size: var(--fs-sm); padding: 0 1.1em; }
 .btn--lg { --btn-h: 58px; font-size: var(--fs-md); padding: 0 1.8em; }
 .btn--block { width: 100%; }
@@ -772,7 +775,7 @@
 .preloader__bar span { display: block; height: 100%; width: 100%; background: var(--grad-star-h); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-out); }
 
 /* ================= CURSOR ================= */
-.cursor-dot, .cursor-ring {
+.cursor-ring {
   opacity: 0;
   position: fixed; left: 0; top: 0;
   pointer-events: none;
@@ -780,10 +783,10 @@
   border-radius: 50%;
   will-change: transform;
 }
-.cursor-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: var(--c-gold); box-shadow: 0 0 12px var(--c-gold); }
+/* halo sutil em volta do cursor nativo (o cursor do SO nunca é escondido) */
 .cursor-ring {
-  width: 36px; height: 36px; margin: -18px 0 0 -18px;
-  border: 1.5px solid rgba(255, 79, 216, .7);
+  width: 34px; height: 34px; margin: -17px 0 0 -17px;
+  border: 1.5px solid rgba(255, 79, 216, .45);
   transition: scale .25s var(--ease-out), background-color .25s, border-color .25s, opacity .2s;
 }
 .cursor-ring.is-hover { scale: 1.65; background-color: rgba(255, 79, 216, .1); border-color: var(--c-gold); }

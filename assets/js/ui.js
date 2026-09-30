@@ -611,15 +611,14 @@ function runPreloader() {
     });
 }
 
-/* ---------------- cursor com rastro de estrelas ---------------- */
+/* ---------------- rastro de estrelas + halo (o cursor nativo do SO fica sempre visível) ---------------- */
 function initCursor() {
   if (!mqFine.matches || reduced()) return;
-  const dot = document.createElement('div'); dot.className = 'cursor-dot';
   const ring = document.createElement('div'); ring.className = 'cursor-ring';
   const trail = document.createElement('div'); trail.className = 'cursor-trail';
   const canvas = document.createElement('canvas');
   trail.appendChild(canvas);
-  [trail, ring, dot].forEach((n) => { n.setAttribute('aria-hidden', 'true'); document.body.appendChild(n); });
+  [trail, ring].forEach((n) => { n.setAttribute('aria-hidden', 'true'); document.body.appendChild(n); });
   const ctx = canvas.getContext('2d');
   let dpr = 1;
   const resize = () => {
@@ -630,9 +629,8 @@ function initCursor() {
   };
   resize();
   window.addEventListener('resize', resize);
-  document.body.classList.add('has-custom-cursor');
 
-  let mx = -100, my = -100, rx = -100, ry = -100, lx = 0, ly = 0, visible = false;
+  let lx = 0, ly = 0, visible = false;
   const parts = [];
   const MAX_PARTS = 22;
   let running = false;
@@ -648,10 +646,8 @@ function initCursor() {
     ctx.closePath(); ctx.fill();
   };
 
+  // o loop só desenha o rastro (enfeite); não há nada seguindo o mouse com atraso
   const loop = () => {
-    rx += (mx - rx) * .2; ry += (my - ry) * .2;
-    dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
-    ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
     if (dirty) { ctx.clearRect(dirty[0], dirty[1], dirty[2] - dirty[0], dirty[3] - dirty[1]); dirty = null; }
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (let i = parts.length - 1; i >= 0; i--) {
@@ -665,26 +661,27 @@ function initCursor() {
     }
     ctx.globalAlpha = 1;
     if (x1 >= x0) dirty = [x0 - 10, y0 - 10, x1 + 10, y1 + 10];
-    const settled = Math.abs(mx - rx) < .1 && Math.abs(my - ry) < .1;
-    if (parts.length || !settled) requestAnimationFrame(loop); else running = false;
+    if (parts.length) requestAnimationFrame(loop); else running = false;
   };
   const kick = () => { if (!running) { running = true; requestAnimationFrame(loop); } };
 
   window.addEventListener('pointermove', (e) => {
     if (e.pointerType !== 'mouse') return;
-    mx = e.clientX; my = e.clientY;
-    if (!visible) { visible = true; rx = mx; ry = my; dot.style.opacity = ring.style.opacity = '1'; }
+    const mx = e.clientX, my = e.clientY;
+    // halo: posição escrita direto no evento (sem lerp/rAF) — gruda no cursor do SO
+    ring.style.transform = `translate3d(${mx}px,${my}px,0)`;
+    if (!visible) { visible = true; lx = mx; ly = my; ring.style.opacity = '1'; }
     const dist = Math.hypot(mx - lx, my - ly);
     if (dist > 26 && parts.length < MAX_PARTS) {
       lx = mx; ly = my;
       parts.push({ x: mx, y: my, vx: (Math.random() - .5) * 1.2, vy: (Math.random() - .5) * 1.2 - .3, r: 3 + Math.random() * 4, rot: Math.random() * 6, vr: (Math.random() - .5) * .2, life: 1, c: SPARK_COLORS[(Math.random() * SPARK_COLORS.length) | 0] });
+      kick();
     }
-    kick();
   }, { passive: true });
-  document.addEventListener('mouseleave', () => { visible = false; dot.style.opacity = ring.style.opacity = '0'; });
+  document.addEventListener('mouseleave', () => { visible = false; ring.style.opacity = '0'; });
   // aba oculta: descarta partículas e limpa o canvas (o loop para sozinho)
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { parts.length = 0; rx = mx; ry = my; dirty = null; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+    if (document.hidden) { parts.length = 0; dirty = null; ctx.clearRect(0, 0, innerWidth, innerHeight); }
   });
   window.addEventListener('pointerdown', () => ring.classList.add('is-down'));
   window.addEventListener('pointerup', () => ring.classList.remove('is-down'));
@@ -792,14 +789,14 @@ async function initHero() {
   if (mqFine.matches) {
     const layers = [...hero.querySelectorAll('[data-mouse-depth]')].map((el) => ({
       el, d: Number(el.dataset.mouseDepth),
-      qx: gsap.quickTo(el, 'x', { duration: .9, ease: 'power3.out' }),
-      qy: gsap.quickTo(el, 'y', { duration: .9, ease: 'power3.out' }),
+      qx: gsap.quickTo(el, 'x', { duration: .35, ease: 'power2.out' }),
+      qy: gsap.quickTo(el, 'y', { duration: .35, ease: 'power2.out' }),
     }));
     let hx = 0, hy = 0, hraf = 0;
     const applyParallax = () => {
       hraf = 0;
       const nx = hx / innerWidth - .5, ny = hy / innerHeight - .5;
-      layers.forEach((l) => { l.qx(nx * l.d * 40); l.qy(ny * l.d * 40); });
+      layers.forEach((l) => { l.qx(nx * l.d * 28); l.qy(ny * l.d * 28); });
     };
     hero.addEventListener('pointermove', (e) => {
       hx = e.clientX; hy = e.clientY;

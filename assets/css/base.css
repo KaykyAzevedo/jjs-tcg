@@ -169,9 +169,6 @@ ul[class], ol[class] { list-style: none; padding: 0; }
 main { padding-top: var(--header-h); }
 main.no-header-offset { padding-top: 0; }
 
-/* cursor custom ativo (desktop) */
-.has-custom-cursor, .has-custom-cursor a, .has-custom-cursor button { cursor: none; }
-.has-custom-cursor input, .has-custom-cursor textarea, .has-custom-cursor select { cursor: auto; }
 
 body.is-locked { overflow: hidden; }
 main:focus { outline: none; }
