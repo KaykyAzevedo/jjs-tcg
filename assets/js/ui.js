@@ -421,13 +421,20 @@ export function flyToCart(imgEl) {
 const TILT_SEL = '.product-card, [data-tilt]';
 const MAX_TILT = 10;
 
+// rects cacheados ficam obsoletos ao rolar: invalida (sem medir) e mede no próximo frame
+let tiltEpoch = 0;
+window.addEventListener('scroll', () => { tiltEpoch++; }, { passive: true });
+window.addEventListener('resize', () => { tiltEpoch++; }, { passive: true });
+
 function bindTilt(card) {
   if (card.__tilt) return;
   card.__tilt = true;
-  let raf = 0, rect = null, px = 0, py = 0;
+  let raf = 0, rect = null, rectEpoch = -1, px = 0, py = 0, foilT = 0, active = false;
   const update = () => {
     raf = 0;
-    const x = (px - rect.left) / rect.width, y = (py - rect.top) / rect.height;
+    if (!active) return;
+    if (!rect || rectEpoch !== tiltEpoch) { rect = card.getBoundingClientRect(); rectEpoch = tiltEpoch; }
+    const x = Math.min(1, Math.max(0, (px - rect.left) / rect.width)), y = Math.min(1, Math.max(0, (py - rect.top) / rect.height));
     card.style.setProperty('--ry', `${((x - .5) * MAX_TILT * 2).toFixed(2)}deg`);
     card.style.setProperty('--rx', `${((.5 - y) * MAX_TILT * 2).toFixed(2)}deg`);
     card.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
@@ -435,22 +442,29 @@ function bindTilt(card) {
   };
   card.addEventListener('pointerenter', (e) => {
     if (e.pointerType !== 'mouse' || reduced()) return;
-    rect = card.getBoundingClientRect();
-    card.classList.add('is-tilting');
+    active = true; rect = null;
+    px = e.clientX; py = e.clientY;
+    clearTimeout(foilT);
+    card.classList.add('is-tilting', 'is-foil');
     card.style.setProperty('--hover', '1');
+    if (!raf) raf = requestAnimationFrame(update);
   });
+  // o handler só grava coordenadas; a escrita acontece em UM rAF por frame
   card.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse' || !rect) return;
+    if (!active) return;
     px = e.clientX; py = e.clientY;
     if (!raf) raf = requestAnimationFrame(update);
   });
   card.addEventListener('pointerleave', () => {
+    if (!active) return;
+    active = false;
     if (raf) cancelAnimationFrame(raf), (raf = 0);
-    rect = null;
     card.classList.remove('is-tilting');
     card.style.setProperty('--rx', '0deg');
     card.style.setProperty('--ry', '0deg');
     card.style.setProperty('--hover', '0');
+    // blend modes só enquanto o brilho está visível
+    foilT = setTimeout(() => card.classList.remove('is-foil'), 450);
   });
 }
 
@@ -465,20 +479,26 @@ let revealIO;
 const pendingReveals = new Set();
 let revealQueue = [], revealFlushing = false;
 
+// Reveals via transição CSS (opacity/transform rodam no compositor — sem estilo inline por frame).
 function flushReveals() {
   const batch = revealQueue; revealQueue = []; revealFlushing = false;
-  const gsap = window.gsap;
-  if (gsap) {
-    gsap.to(batch, {
-      opacity: 1, x: 0, y: 0, scale: 1,
-      duration: 1, ease: 'expo.out', stagger: .08, overwrite: true,
-      onComplete() { batch.forEach((el) => el.classList.add('is-revealed')); },
-    });
-    // failsafe: se o ticker do GSAP estiver pausado (aba oculta etc.), o CSS revela
-    setTimeout(() => batch.forEach((el) => el.classList.add('is-revealed')), 1400 + batch.length * 80);
-  } else {
-    batch.forEach((el, i) => { el.style.setProperty('--reveal-delay', `${i * .08}s`); el.classList.add('is-revealed'); });
-  }
+  let i = 0;
+  batch.forEach((el) => {
+    // já passou da tela (salto de scroll/âncora): revela sem animar
+    if (el.getBoundingClientRect().bottom < 0) { el.classList.add('reveal-instant', 'is-revealed'); finishReveal(el); return; }
+    const delay = Math.min(i++, 6) * .07;
+    el.style.setProperty('--reveal-delay', `${delay}s`);
+    el.classList.add('is-revealed');
+    setTimeout(() => finishReveal(el), (delay + 1) * 1000);
+  });
+}
+
+// Fim do reveal: tira as regras de reveal para o elemento voltar aos próprios
+// transform/transition (ex.: o tilt do .product-card).
+function finishReveal(el) {
+  el.removeAttribute('data-reveal');
+  el.classList.remove('is-revealed', 'reveal-instant');
+  el.style.removeProperty('--reveal-delay');
 }
 
 function revealNow(el) {
@@ -603,7 +623,7 @@ function initCursor() {
   const ctx = canvas.getContext('2d');
   let dpr = 1;
   const resize = () => {
-    dpr = Math.min(2, window.devicePixelRatio || 1);
+    dpr = Math.min(1.5, window.devicePixelRatio || 1);
     canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
     canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -614,7 +634,9 @@ function initCursor() {
 
   let mx = -100, my = -100, rx = -100, ry = -100, lx = 0, ly = 0, visible = false;
   const parts = [];
+  const MAX_PARTS = 22;
   let running = false;
+  let dirty = null; // retângulo sujo do frame anterior (limpa só ele, não a tela toda)
 
   const drawStar = (x, y, r, rot) => {
     ctx.beginPath();
@@ -630,16 +652,19 @@ function initCursor() {
     rx += (mx - rx) * .2; ry += (my - ry) * .2;
     dot.style.transform = `translate3d(${mx}px,${my}px,0)`;
     ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    if (dirty) { ctx.clearRect(dirty[0], dirty[1], dirty[2] - dirty[0], dirty[3] - dirty[1]); dirty = null; }
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (let i = parts.length - 1; i >= 0; i--) {
       const p = parts[i];
-      p.life -= .022; p.x += p.vx; p.y += p.vy; p.vy += .04; p.rot += p.vr;
+      p.life -= .03; p.x += p.vx; p.y += p.vy; p.vy += .04; p.rot += p.vr;
       if (p.life <= 0) { parts.splice(i, 1); continue; }
       ctx.globalAlpha = p.life;
       ctx.fillStyle = p.c;
       drawStar(p.x, p.y, p.r * p.life, p.rot);
+      x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y);
     }
     ctx.globalAlpha = 1;
+    if (x1 >= x0) dirty = [x0 - 10, y0 - 10, x1 + 10, y1 + 10];
     const settled = Math.abs(mx - rx) < .1 && Math.abs(my - ry) < .1;
     if (parts.length || !settled) requestAnimationFrame(loop); else running = false;
   };
@@ -650,7 +675,7 @@ function initCursor() {
     mx = e.clientX; my = e.clientY;
     if (!visible) { visible = true; rx = mx; ry = my; dot.style.opacity = ring.style.opacity = '1'; }
     const dist = Math.hypot(mx - lx, my - ly);
-    if (dist > 14 && parts.length < 60) {
+    if (dist > 26 && parts.length < MAX_PARTS) {
       lx = mx; ly = my;
       parts.push({ x: mx, y: my, vx: (Math.random() - .5) * 1.2, vy: (Math.random() - .5) * 1.2 - .3, r: 3 + Math.random() * 4, rot: Math.random() * 6, vr: (Math.random() - .5) * .2, life: 1, c: SPARK_COLORS[(Math.random() * SPARK_COLORS.length) | 0] });
     }
@@ -659,7 +684,7 @@ function initCursor() {
   document.addEventListener('mouseleave', () => { visible = false; dot.style.opacity = ring.style.opacity = '0'; });
   // aba oculta: descarta partículas e limpa o canvas (o loop para sozinho)
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { parts.length = 0; rx = mx; ry = my; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+    if (document.hidden) { parts.length = 0; rx = mx; ry = my; dirty = null; ctx.clearRect(0, 0, innerWidth, innerHeight); }
   });
   window.addEventListener('pointerdown', () => ring.classList.add('is-down'));
   window.addEventListener('pointerup', () => ring.classList.remove('is-down'));
@@ -673,12 +698,19 @@ function initMagnetic(root = document) {
   if (!mqFine.matches || reduced()) return;
   root.querySelectorAll('[data-magnetic]:not([data-mag-bound])').forEach((el) => {
     el.dataset.magBound = '';
+    let r = null, px = 0, py = 0, raf = 0;
+    const apply = () => {
+      raf = 0;
+      if (!r) return;
+      el.style.transform = `translate(${(px - r.left - r.width / 2) * .25}px, ${(py - r.top - r.height / 2) * .35}px)`;
+    };
+    // rect medido uma vez na entrada (antes de qualquer translate aplicado)
+    el.addEventListener('pointerenter', () => { r = el.getBoundingClientRect(); });
     el.addEventListener('pointermove', (e) => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * .25, y = (e.clientY - r.top - r.height / 2) * .35;
-      el.style.transform = `translate(${x}px, ${y}px)`;
+      px = e.clientX; py = e.clientY;
+      if (!raf) raf = requestAnimationFrame(apply);
     });
-    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+    el.addEventListener('pointerleave', () => { r = null; if (raf) cancelAnimationFrame(raf), (raf = 0); el.style.transform = ''; });
   });
 }
 
@@ -763,10 +795,16 @@ async function initHero() {
       qx: gsap.quickTo(el, 'x', { duration: .9, ease: 'power3.out' }),
       qy: gsap.quickTo(el, 'y', { duration: .9, ease: 'power3.out' }),
     }));
-    hero.addEventListener('pointermove', (e) => {
-      const nx = e.clientX / innerWidth - .5, ny = e.clientY / innerHeight - .5;
+    let hx = 0, hy = 0, hraf = 0;
+    const applyParallax = () => {
+      hraf = 0;
+      const nx = hx / innerWidth - .5, ny = hy / innerHeight - .5;
       layers.forEach((l) => { l.qx(nx * l.d * 40); l.qy(ny * l.d * 40); });
-    });
+    };
+    hero.addEventListener('pointermove', (e) => {
+      hx = e.clientX; hy = e.clientY;
+      if (!hraf) hraf = requestAnimationFrame(applyParallax);
+    }, { passive: true });
   }
   ST?.refresh();
 }
