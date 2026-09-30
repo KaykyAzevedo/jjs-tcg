@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JJ's TCG — Cartas colecionáveis, boosters e acessórios</title>
+  <meta name="description" content="JJ's TCG: Pokémon, Magic, Yu-Gi-Oh!, One Piece e Lorcana. Booster boxes, ETBs, cartas avulsas, decks e acessórios com frete grátis acima de R$ 300.">
+  <meta name="theme-color" content="#120A1E">
+  <link rel="icon" href="assets/img/logo.jpeg">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/shop.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script type="module" src="assets/js/ui.js"></script>
+  <script type="module" src="assets/js/cart.js"></script>
+  <style>
+    /* ============ HOME (index.html) ============ */
+    @keyframes preloader-failsafe { to { opacity: 0; visibility: hidden; } }
+    .preloader { animation: preloader-failsafe .5s 5s forwards; }
+    @keyframes hero-failsafe { to { visibility: visible; } }
+    .js .hero:not(.is-ready) .hero__inner, .js .hero:not(.is-ready) .hero__star { visibility: hidden; animation: hero-failsafe 0s 4s forwards; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      min-height: min(100svh, 920px);
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      padding-block: calc(var(--header-h) + 24px) 64px;
+      margin-top: calc(var(--header-h) * -1);
+    }
+    .hero__bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+    .hero__blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; animation: pulse-glow 8s ease-in-out infinite; will-change: transform, opacity; }
+    .hero__blob--1 { width: 55vw; height: 55vw; max-width: 720px; max-height: 720px; left: -12vw; top: -10vw; background: var(--c-violet); }
+    .hero__blob--2 { width: 40vw; height: 40vw; max-width: 560px; max-height: 560px; right: -8vw; top: 12%; background: var(--c-peach); opacity: .35; animation-delay: -3s; }
+    .hero__blob--3 { width: 30vw; height: 30vw; max-width: 420px; max-height: 420px; left: 40%; bottom: -12vw; background: var(--c-hotpink); opacity: .28; animation-delay: -5s; }
+    .hero__grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255, 235, 200, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 235, 200, .05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 70%);
+      mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 70%);
+    }
+    .hero__twinkles i {
+      position: absolute; width: 10px; height: 10px;
+      background: var(--c-cream);
+      clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .hero__star {
+      position: absolute; z-index: -1;
+      width: min(78vw, 720px); aspect-ratio: 1;
+      right: -8%; top: 50%;
+      margin-top: calc(min(78vw, 720px) / -2);
+      pointer-events: none;
+    }
+    .hero__star-inner { position: relative; width: 100%; height: 100%; }
+    .hero__star-glow { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 79, 216, .55), rgba(255, 122, 69, .25) 45%, transparent 70%); filter: blur(30px); animation: pulse-glow 5s ease-in-out infinite; }
+    .hero__star svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 60s linear infinite; filter: drop-shadow(0 0 40px rgba(255, 79, 216, .45)); opacity: .9; will-change: transform; }
+    .hero__star-echo { opacity: .25 !important; filter: blur(2px) !important; transform: scale(1.12); animation-direction: reverse !important; animation-duration: 90s !important; }
+
+    .hero__inner { position: relative; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: var(--sp-6); }
+    .hero__content { position: relative; z-index: 2; }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 14px 6px 6px;
+      border-radius: var(--r-pill);
+      background: rgba(255, 235, 200, .07);
+      border: 1px solid var(--c-border);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      font-size: var(--fs-sm); font-weight: 600; color: var(--c-text-muted);
+      margin-bottom: var(--sp-5);
+    }
+    .hero__eyebrow b { padding: 3px 10px; border-radius: var(--r-pill); background: var(--grad-star); color: var(--c-ink); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .hero__title { font-size: clamp(2.5rem, 1rem + 5.4vw, 5.6rem); }
+    .hero__line { display: block; overflow: hidden; padding: .04em .18em .14em 0; margin-bottom: -.12em; }
+    .hero__line > span { display: inline-block; }
+    .hero__sub { font-size: var(--fs-md); color: var(--c-text-muted); max-width: 46ch; margin-top: var(--sp-5); }
+    .hero__cta { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); }
+    .hero__stats { display: flex; flex-wrap: wrap; gap: var(--sp-6); margin-top: var(--sp-7); }
+    .hero__stat strong { display: block; font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 800; color: var(--c-cream); line-height: 1; }
+    .hero__stat span { font-size: var(--fs-sm); color: var(--c-text-dim); }
+
+    .hero__cards { position: relative; height: clamp(380px, 46vw, 600px); }
+    .hero__card-pos { position: absolute; width: clamp(150px, 17vw, 240px); }
+    .hero__card-pos:nth-child(1) { left: 2%; top: 14%; z-index: 2; }
+    .hero__card-pos:nth-child(2) { left: 34%; top: 0; z-index: 3; }
+    .hero__card-pos:nth-child(3) { right: 0; top: 24%; z-index: 2; }
+    .hero__card-pos:nth-child(4) { left: 22%; bottom: 0; z-index: 4; width: clamp(130px, 14vw, 200px); }
+    .hero__float { animation: float 7s var(--ease-in-out) infinite; will-change: transform; }
+    .hero__card-pos:nth-child(2) .hero__float { animation-delay: -2s; animation-duration: 8s; }
+    .hero__card-pos:nth-child(3) .hero__float { animation-delay: -4s; animation-duration: 6.5s; }
+    .hero__card-pos:nth-child(4) .hero__float { animation-delay: -1s; animation-duration: 7.5s; }
+
+    /* Carta estilizada (arte própria, sem copyright) */
+    .tcg-card {
+      --c1: #7B4FF0; --c2: #FF4FD8;
+      position: relative;
+      aspect-ratio: 5 / 7;
+      border-radius: 16px;
+      padding: 8px;
+      background: linear-gradient(145deg, #FFEBC8, #e9c890 40%, #FFEBC8 60%, #caa56a);
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .8), 0 0 50px -10px color-mix(in srgb, var(--c2) 60%, transparent);
+      rotate: var(--rot, 0deg);
+    }
+    .tcg-card__inner {
+      position: relative; height: 100%;
+      border-radius: 10px; overflow: hidden;
+      background: linear-gradient(160deg, var(--c1), var(--c2));
+      display: flex; flex-direction: column;
+      isolation: isolate;
+    }
+    .tcg-card__top { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-family: var(--font-display); font-weight: 800; font-size: clamp(10px, 1vw, 14px); color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, .35); }
+    .tcg-card__top i { font-style: normal; font-size: .8em; opacity: .85; }
+    .tcg-card__art {
+      position: relative; margin: 0 8px; flex: 1 1 55%;
+      border-radius: 6px; overflow: hidden;
+      background: radial-gradient(circle at 50% 60%, rgba(255, 255, 255, .45), transparent 55%), linear-gradient(200deg, rgba(0, 0, 0, .25), transparent), linear-gradient(160deg, var(--c2), var(--c1));
+      border: 2px solid rgba(255, 235, 200, .7);
+      display: grid; place-items: center;
+    }
+    .tcg-card__art svg { width: 62%; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .35)); animation: spin 22s linear infinite; will-change: transform; }
+    .tcg-card__text { padding: 8px 10px 10px; display: grid; gap: 5px; }
+    .tcg-card__text span { display: block; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .35); }
+    .tcg-card__text span:nth-child(2) { width: 80%; }
+    .tcg-card__text span:nth-child(3) { width: 55%; }
+    .tcg-card__holo {
+      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background: var(--grad-foil); background-size: 250% 250%;
+      background-position: var(--mx, 50%) var(--my, 50%);
+      mix-blend-mode: color-dodge;
+      opacity: calc(.25 + var(--hover, 0) * .55);
+      transition: opacity .4s;
+    }
+    .tcg-card__glare { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .5), transparent 50%); mix-blend-mode: overlay; }
+
+    @media (max-width: 900px) {
+      .hero { min-height: auto; padding-bottom: 32px; }
+      .hero__inner { grid-template-columns: 1fr; }
+      .hero__cards { height: 300px; max-width: 460px; width: 100%; margin: 0 auto; }
+      .hero__card-pos { width: 136px; }
+      .hero__card-pos:nth-child(4) { width: 118px; }
+      .hero__star { width: 120vw; margin-top: -60vw; right: -50vw; top: 30%; opacity: .7; }
+      .hero__stats { gap: var(--sp-5); margin-top: var(--sp-6); }
+    }
+    @media (max-width: 420px) {
+      .hero__cards { height: 250px; }
+      .hero__card-pos { width: 112px; }
+      .hero__card-pos:nth-child(4) { width: 100px; }
+    }
+
+    /* ---------- MARQUEE ---------- */
+    .games-strip { position: relative; border-block: 1px solid var(--c-border); background: rgba(26, 15, 36, .6); transform: rotate(-1.5deg); margin: 24px -12px; }
+    .games-strip + .games-strip { transform: rotate(1deg); margin-top: -18px; background: var(--grad-star-h); border: 0; }
+    .games-strip .marquee { padding-block: 14px; }
+    .games-strip__item { display: inline-flex; align-items: center; gap: clamp(28px, 5vw, 64px); font-family: var(--font-display); font-weight: 800; font-size: clamp(1.4rem, 1rem + 2.4vw, 2.8rem); letter-spacing: -.02em; color: var(--c-cream); white-space: nowrap; text-shadow: var(--shadow-echo-sm); }
+    .games-strip__item svg { width: .8em; height: .8em; flex: none; }
+    .games-strip--alt .games-strip__item { font-size: clamp(1rem, .9rem + .8vw, 1.4rem); color: var(--c-ink); text-shadow: none; font-family: var(--font-body); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .games-strip--alt .games-strip__item svg polygon { fill: var(--c-ink); }
+
+    /* ---------- CATEGORIAS ---------- */
+    .games-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+    .game-tile {
+      --gc: var(--c-gold);
+      position: relative; overflow: hidden; isolation: isolate;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      min-height: clamp(150px, 18vw, 230px);
+      padding: clamp(16px, 2vw, 26px);
+      border-radius: var(--r-lg);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--gc) 22%, var(--c-surface)), var(--c-surface) 70%);
+      border: 1px solid color-mix(in srgb, var(--gc) 30%, transparent);
+      transition: border-color .4s, box-shadow .4s var(--ease-out);
+    }
+    .game-tile::before {
+      content: ""; position: absolute; z-index: -1;
+      width: 70%; aspect-ratio: 1; right: -18%; top: -26%;
+      background: var(--gc); opacity: .18;
+      clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      transition: transform .8s var(--ease-out), opacity .4s;
+    }
+    .game-tile:hover { border-color: var(--gc); box-shadow: 0 20px 50px -20px color-mix(in srgb, var(--gc) 70%, transparent); }
+    .game-tile:hover::before { transform: rotate(72deg) scale(1.15); opacity: .32; }
+    .game-tile__name { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-xl); color: var(--c-cream); line-height: 1.05; text-shadow: var(--shadow-echo-sm); }
+    .game-tile__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; font-size: var(--fs-sm); color: var(--c-text-muted); }
+    .game-tile__arrow { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--gc); color: var(--c-ink); transform: translateX(-6px); opacity: .9; transition: transform .4s var(--ease-spring); flex: none; }
+    .game-tile:hover .game-tile__arrow { transform: translateX(0) rotate(-45deg); }
+    .game-tile__arrow svg { width: 18px; height: 18px; }
+    @media (max-width: 760px) { .games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .game-tile__name { font-size: var(--fs-lg); } }
+
+    /* ---------- PRÉ-VENDA ---------- */
+    .presale {
+      position: relative; overflow: hidden; isolation: isolate;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--sp-6); align-items: center;
+      padding: clamp(24px, 4vw, 56px);
+      border-radius: var(--r-xl);
+      background: var(--grad-bg);
+      box-shadow: var(--shadow-lg);
+    }
+    .presale::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 85% 20%, rgba(255, 210, 31, .35), transparent 45%), linear-gradient(90deg, rgba(18, 10, 30, .72), rgba(18, 10, 30, .45) 50%, transparent 80%); }
+    .presale .section-kicker { color: var(--c-gold); }
+    .presale__title { font-size: var(--fs-2xl); line-height: 1.02; }
+    .presale p { color: var(--c-cream); font-weight: 500; margin-top: var(--sp-3); max-width: 44ch; }
+    .countdown { display: flex; gap: clamp(8px, 1.5vw, 14px); margin-top: var(--sp-5); }
+    .countdown__cell { min-width: clamp(58px, 7vw, 80px); padding: 12px 8px; border-radius: var(--r-md); background: rgba(18, 10, 30, .82); text-align: center; box-shadow: var(--shadow-md); }
+    .countdown__cell strong { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.4rem, 1rem + 1.6vw, 2.2rem); line-height: 1; color: var(--c-cream); font-variant-numeric: tabular-nums; }
+    .countdown__cell span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--c-text-muted); }
+    .presale .btn { margin-top: var(--sp-5); }
+    .presale__visual { position: relative; display: grid; place-items: center; min-height: 260px; }
+    .presale__visual .tcg-card { width: clamp(150px, 18vw, 220px); }
+    .presale__visual .hero__float:nth-child(2) { position: absolute; transform-origin: bottom; }
+    .presale__box { position: absolute; width: clamp(120px, 14vw, 170px); left: 8%; bottom: 0; }
+    @media (max-width: 760px) { .presale { grid-template-columns: 1fr; } .presale::before { background: linear-gradient(180deg, rgba(18, 10, 30, .72), rgba(18, 10, 30, .5) 60%, transparent); } .presale__visual { min-height: 240px; } }
+
+    /* ---------- BENEFÍCIOS ---------- */
+    .perks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+    .perk {
+      position: relative; padding: clamp(18px, 2.4vw, 28px);
+      border-radius: var(--r-lg);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      overflow: hidden;
+      transition: transform .5s var(--ease-out), border-color .4s;
+    }
+    .perk:hover { transform: translateY(-6px); border-color: rgba(255, 79, 216, .4); }
+    .perk::after { content: ""; position: absolute; inset: auto 0 0 0; height: 3px; background: var(--grad-star-h); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease-out); }
+    .perk:hover::after { transform: scaleX(1); }
+    .perk__icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 16px; background: var(--grad-star); color: var(--c-ink); box-shadow: var(--glow-star); margin-bottom: var(--sp-4); }
+    .perk__icon svg { width: 26px; height: 26px; }
+    .perk__num { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-2xl); line-height: 1; color: var(--c-cream); text-shadow: var(--shadow-echo-sm); }
+    .perk h3 { font-size: var(--fs-md); margin-top: 6px; font-family: var(--font-body); font-weight: 700; color: var(--c-text); }
+    .perk p { font-size: var(--fs-sm); color: var(--c-text-muted); margin-top: 6px; }
+    @media (max-width: 960px) { .perks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 440px) { .perks { grid-template-columns: 1fr; } }
+
+    /* ---------- NEWSLETTER ---------- */
+    .newsletter {
+      position: relative; overflow: hidden; isolation: isolate;
+      text-align: center;
+      padding: clamp(36px, 6vw, 80px) clamp(18px, 4vw, 48px);
+      border-radius: var(--r-xl);
+      background: radial-gradient(circle at 50% 0%, rgba(123, 79, 240, .45), transparent 60%), var(--c-surface);
+      border: 1px solid var(--c-border);
+    }
+    .newsletter__stars i { position: absolute; width: 14px; height: 14px; background: var(--c-gold); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: twinkle 3s ease-in-out infinite; z-index: -1; }
+    .newsletter form { max-width: 520px; margin: var(--sp-6) auto 0; }
+    .newsletter .field__error { text-align: left; margin-top: 6px; }
+    .newsletter small { display: block; margin-top: var(--sp-3); color: var(--c-text-dim); }
+
+    /* vitrines */
+    .showcase-empty { grid-column: 1 / -1; }
+    .skeleton-card { aspect-ratio: 5 / 8.6; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <svg class="preloader__star" viewBox="0 0 100 100"><defs><linearGradient id="pl-g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".55" stop-color="#FF7A45"/><stop offset="1" stop-color="#FFD21F"/></linearGradient></defs><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="url(#pl-g)" stroke-linejoin="round"/></svg>
+      <div class="preloader__text">JJ's TCG</div>
+      <div class="preloader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <header data-site-header></header>
+
+  <main id="conteudo">
+    <!-- ================= HERO ================= -->
+    <section class="hero" data-hero aria-labelledby="hero-title">
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__blob hero__blob--1"></div>
+        <div class="hero__blob hero__blob--2"></div>
+        <div class="hero__blob hero__blob--3"></div>
+        <div class="hero__grid"></div>
+        <div class="hero__twinkles">
+          <i style="left:8%;top:22%"></i>
+          <i style="left:46%;top:14%;animation-delay:-1s;width:7px;height:7px"></i>
+          <i style="left:62%;top:78%;animation-delay:-2s"></i>
+          <i style="left:18%;top:82%;animation-delay:-.5s;width:6px;height:6px"></i>
+          <i style="left:88%;top:12%;animation-delay:-1.6s;width:12px;height:12px"></i>
+          <i style="left:34%;top:56%;animation-delay:-2.4s;width:6px;height:6px"></i>
+          <i style="left:94%;top:64%;animation-delay:-.8s"></i>
+        </div>
+      </div>
+
+      <div class="hero__star" data-hero-star aria-hidden="true">
+        <div class="hero__star-inner" data-mouse-depth="-.6">
+          <div class="hero__star-glow"></div>
+          <svg class="hero__star-echo" viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="none" stroke="#FFEBC8" stroke-width=".4" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 100 100"><defs><linearGradient id="hero-g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".55" stop-color="#FF7A45"/><stop offset="1" stop-color="#FFD21F"/></linearGradient></defs><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="url(#hero-g)" opacity=".85" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <div class="hero__eyebrow" data-hero-fade><b>Novo</b> Pré-venda de lançamentos aberta</div>
+          <h1 class="display hero__title" id="hero-title">
+            <span class="hero__line"><span data-hero-line>Abra o pacote.</span></span>
+            <span class="hero__line"><span data-hero-line>Sinta a <span class="text-grad">magia.</span></span></span>
+          </h1>
+          <p class="hero__sub" data-hero-fade>Booster boxes, ETBs, cartas avulsas e acessórios de Pokémon, Magic, Yu-Gi-Oh!, One Piece e Lorcana — originais, lacrados e enviados com proteção de colecionador.</p>
+          <div class="hero__cta" data-hero-fade>
+            <a class="btn btn--primary btn--lg" href="pages/catalogo.html" data-magnetic>Explorar a loja
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--ghost btn--lg" href="#lancamentos">Ver lançamentos</a>
+          </div>
+          <div class="hero__stats" data-hero-fade>
+            <div class="hero__stat"><strong data-count-to="5">5</strong><span>jogos na loja</span></div>
+            <div class="hero__stat"><strong data-count-to="100" data-suffix="%">100%</strong><span>produtos originais</span></div>
+            <div class="hero__stat"><strong data-count-to="300" data-prefix="R$ ">R$ 300</strong><span>para frete grátis</span></div>
+          </div>
+        </div>
+
+        <div class="hero__cards" aria-hidden="true">
+          <div class="hero__card-pos" data-hero-card data-depth="1.2">
+            <div data-mouse-depth="1.2"><div class="hero__float" style="--rot:-10deg">
+              <div class="tcg-card" data-tilt style="--c1:#7B4FF0;--c2:#FF4FD8">
+                <div class="tcg-card__inner">
+                  <div class="tcg-card__top">Astral <i>120 HP</i></div>
+                  <div class="tcg-card__art"><svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FFD21F"/></svg></div>
+                  <div class="tcg-card__text"><span></span><span></span><span></span></div>
+                  <span class="tcg-card__holo"></span><span class="tcg-card__glare"></span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="hero__card-pos" data-hero-card data-depth=".6">
+            <div data-mouse-depth=".7"><div class="hero__float" style="--rot:4deg">
+              <div class="tcg-card" data-tilt style="--c1:#FF7A45;--c2:#FFD21F">
+                <div class="tcg-card__inner">
+                  <div class="tcg-card__top">Solária <i>★★★</i></div>
+                  <div class="tcg-card__art"><svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FF4FD8"/></svg></div>
+                  <div class="tcg-card__text"><span></span><span></span><span></span></div>
+                  <span class="tcg-card__holo"></span><span class="tcg-card__glare"></span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="hero__card-pos" data-hero-card data-depth="1.5">
+            <div data-mouse-depth="1.6"><div class="hero__float" style="--rot:12deg">
+              <div class="tcg-card" data-tilt style="--c1:#A968C9;--c2:#6FB6FF">
+                <div class="tcg-card__inner">
+                  <div class="tcg-card__top">Nébula <i>90 HP</i></div>
+                  <div class="tcg-card__art"><svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FFEBC8"/></svg></div>
+                  <div class="tcg-card__text"><span></span><span></span><span></span></div>
+                  <span class="tcg-card__holo"></span><span class="tcg-card__glare"></span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="hero__card-pos" data-hero-card data-depth="2">
+            <div data-mouse-depth="2.2"><div class="hero__float" style="--rot:-4deg">
+              <div class="tcg-card" data-tilt style="--c1:#FF4FD8;--c2:#FF7A45">
+                <div class="tcg-card__inner">
+                  <div class="tcg-card__top">Fênix <i>★★</i></div>
+                  <div class="tcg-card__art"><svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FFD21F"/></svg></div>
+                  <div class="tcg-card__text"><span></span><span></span><span></span></div>
+                  <span class="tcg-card__holo"></span><span class="tcg-card__glare"></span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <div class="games-strip" aria-label="Jogos disponíveis">
+      <div class="marquee" style="--marquee-dur:34s">
+        <div class="marquee__track" data-marquee>
+          <div class="marquee__group">
+            <span class="games-strip__item">Pokémon <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FFD21F"/></svg></span>
+            <span class="games-strip__item">Magic: The Gathering <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FF7A45"/></svg></span>
+            <span class="games-strip__item">Yu-Gi-Oh! <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#A968C9"/></svg></span>
+            <span class="games-strip__item">One Piece <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FF5470"/></svg></span>
+            <span class="games-strip__item">Lorcana <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#6FB6FF"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="games-strip games-strip--alt" aria-hidden="true">
+      <div class="marquee marquee--reverse" style="--marquee-dur:28s">
+        <div class="marquee__track" data-marquee>
+          <div class="marquee__group">
+            <span class="games-strip__item">Booster Boxes <svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37"/></svg></span>
+            <span class="games-strip__item">Elite Trainer Boxes <svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37"/></svg></span>
+            <span class="games-strip__item">Cartas avulsas <svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37"/></svg></span>
+            <span class="games-strip__item">Decks <svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37"/></svg></span>
+            <span class="games-strip__item">Sleeves &amp; Playmats <svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= DESTAQUES ================= -->
+    <section class="section" id="destaques" aria-labelledby="destaques-title">
+      <div class="container">
+        <div class="section-head section-head--split">
+          <div data-reveal>
+            <span class="section-kicker">Vitrine</span>
+            <h2 class="section-title display" id="destaques-title">Os mais <span class="text-grad">brilhantes</span></h2>
+            <p class="section-sub">Os queridinhos da comunidade — passe o mouse e veja o foil.</p>
+          </div>
+          <a class="btn btn--outline" href="pages/catalogo.html" data-reveal="right">Ver tudo</a>
+        </div>
+        <div class="product-grid" data-showcase="featured" aria-live="polite">
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CATEGORIAS ================= -->
+    <section class="section section--tight" id="jogos" aria-labelledby="jogos-title">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <span class="section-kicker">Escolha seu universo</span>
+          <h2 class="section-title display" id="jogos-title">Compre por <span class="text-grad">jogo</span></h2>
+        </div>
+        <div class="games-grid" data-games-grid></div>
+      </div>
+    </section>
+
+    <!-- ================= LANÇAMENTOS / PRÉ-VENDA ================= -->
+    <section class="section" id="lancamentos" aria-labelledby="lanc-title">
+      <div class="container">
+        <div class="presale" data-reveal="scale">
+          <div>
+            <span class="section-kicker">Pré-venda</span>
+            <h2 class="display presale__title" id="lanc-title">Garanta os lançamentos antes de todo mundo</h2>
+            <p>Reserve agora e receba no dia do lançamento. Estoque limitado de pré-venda — quando acabar, acabou.</p>
+            <div class="countdown" data-countdown="2026-11-14T10:00:00-03:00" role="timer" aria-label="Tempo até o próximo lançamento">
+              <div class="countdown__cell"><strong data-cd="d">00</strong><span>dias</span></div>
+              <div class="countdown__cell"><strong data-cd="h">00</strong><span>horas</span></div>
+              <div class="countdown__cell"><strong data-cd="m">00</strong><span>min</span></div>
+              <div class="countdown__cell"><strong data-cd="s">00</strong><span>seg</span></div>
+            </div>
+            <a class="btn btn--primary btn--lg" href="pages/catalogo.html?sort=lancamentos" data-magnetic style="background:var(--c-night);color:var(--c-cream);box-shadow:var(--shadow-lg)">Ver lançamentos</a>
+          </div>
+          <div class="presale__visual" aria-hidden="true">
+            <div class="hero__float" style="--rot:8deg">
+              <div class="tcg-card" data-tilt style="--c1:#120A1E;--c2:#7B4FF0">
+                <div class="tcg-card__inner">
+                  <div class="tcg-card__top">Em breve <i>???</i></div>
+                  <div class="tcg-card__art"><svg viewBox="0 0 100 100"><polygon points="50,2 61,37 98,37 68,58 79,94 50,72 21,94 32,58 2,37 39,37" fill="#FFD21F"/></svg></div>
+                  <div class="tcg-card__text"><span></span><span></span><span></span></div>
+                  <span class="tcg-card__holo"></span><span class="tcg-card__glare"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head section-head--split" style="margin-top:var(--sp-8)">
+          <div data-reveal>
+            <span class="section-kicker">Acabou de chegar</span>
+            <h2 class="section-title display">Lançamentos</h2>
+          </div>
+          <a class="btn btn--ghost" href="pages/catalogo.html?sort=lancamentos" data-reveal="right">Todos os lançamentos</a>
+        </div>
+        <div class="product-grid" data-showcase="new" aria-live="polite">
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BENEFÍCIOS ================= -->
+    <section class="section section--tight" id="beneficios" aria-labelledby="perks-title">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <span class="section-kicker">Por que a JJ's</span>
+          <h2 class="section-title display" id="perks-title">Feito por quem <span class="text-grad">coleciona</span></h2>
+        </div>
+        <div class="perks">
+          <article class="perk" data-reveal>
+            <div class="perk__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
+            <div class="perk__num" data-count-to="300" data-prefix="R$ ">R$ 300</div>
+            <h3>Frete grátis</h3>
+            <p>Em compras acima de R$ 300 para todo o Brasil.</p>
+          </article>
+          <article class="perk" data-reveal>
+            <div class="perk__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <div class="perk__num">Seguro</div>
+            <h3>Envio protegido</h3>
+            <p>Cartas em top loader, caixas com plástico bolha e código de rastreio.</p>
+          </article>
+          <article class="perk" data-reveal>
+            <div class="perk__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.9L22 9.3l-5.5 4.7 1.7 7.2L12 17.3 5.8 21.2l1.7-7.2L2 9.3l7.1-.4z"/></svg></div>
+            <div class="perk__num" data-count-to="100" data-suffix="%">100%</div>
+            <h3>Cartas autênticas</h3>
+            <p>Somente produtos originais e lacrados de distribuidores oficiais.</p>
+          </article>
+          <article class="perk" data-reveal>
+            <div class="perk__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7H8a2.5 2.5 0 1 1 0-5c3 0 4 5 4 5zM12 7h4a2.5 2.5 0 1 0 0-5c-3 0-4 5-4 5z"/></svg></div>
+            <div class="perk__num" data-count-to="10" data-suffix="% OFF">10% OFF</div>
+            <h3>Primeira compra</h3>
+            <p>Use o cupom <strong style="color:var(--c-gold)">JJ10</strong> no carrinho.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NEWSLETTER ================= -->
+    <section class="section" aria-labelledby="news-title">
+      <div class="container">
+        <div class="newsletter" data-reveal="scale">
+          <div class="newsletter__stars" aria-hidden="true">
+            <i style="left:8%;top:18%"></i><i style="left:90%;top:24%;animation-delay:-1s"></i>
+            <i style="left:16%;top:78%;animation-delay:-2s;width:9px;height:9px"></i><i style="left:84%;top:80%;animation-delay:-.6s;width:10px;height:10px"></i>
+          </div>
+          <span class="section-kicker">Newsletter</span>
+          <h2 class="section-title display" id="news-title">Seja o primeiro a <span class="text-grad">saber</span></h2>
+          <p class="section-sub">Pré-vendas, reposições e cupons exclusivos direto no seu e-mail. Sem spam, prometemos.</p>
+          <form data-newsletter novalidate>
+            <div class="field" data-field>
+              <label class="sr-only" for="news-email">Seu e-mail</label>
+              <div class="input-group">
+                <input class="input" id="news-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required>
+                <button class="btn btn--primary" type="submit">Quero receber</button>
+              </div>
+              <span class="field__error">Digite um e-mail válido.</span>
+            </div>
+          </form>
+          <small>Ao se inscrever você concorda em receber e-mails da JJ's TCG.</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script type="module">
+    import { renderProductCard, toast, starBurst, confetti, icons, url } from './assets/js/ui.js';
+
+    const GAMES = [
+      { k: 'pokemon', label: 'Pokémon', color: '#FFD21F' },
+      { k: 'magic', label: 'Magic: The Gathering', color: '#FF7A45' },
+      { k: 'yugioh', label: 'Yu-Gi-Oh!', color: '#A968C9' },
+      { k: 'onepiece', label: 'One Piece', color: '#FF5470' },
+      { k: 'lorcana', label: 'Disney Lorcana', color: '#6FB6FF' },
+      { k: 'acessorios', label: 'Acessórios', color: '#3DDC97' },
+    ];
+    const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+    // ---------- Marquee: duplica o grupo para loop contínuo ----------
+    document.querySelectorAll('[data-marquee]').forEach((track) => {
+      const g = track.firstElementChild;
+      const clone = g.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+
+    // ---------- Categorias ----------
+    const grid = document.querySelector('[data-games-grid]');
+    const renderGames = (counts = {}) => {
+      grid.innerHTML = GAMES.map((g, i) => `
+        <a class="game-tile" href="pages/catalogo.html?jogo=${g.k}" style="--gc:${g.color};--reveal-delay:${i * .06}s" data-reveal>
+          <span class="game-tile__name">${g.label}</span>
+          <span class="game-tile__meta"><span>${counts[g.k] ? `${counts[g.k]} produto${counts[g.k] > 1 ? 's' : ''}` : 'Ver produtos'}</span><span class="game-tile__arrow">${arrow}</span></span>
+        </a>`).join('');
+    };
+    renderGames();
+
+    // ---------- Vitrines (store.js da Kitsune, com fallback gracioso) ----------
+    const fillShowcase = (el, items, fmt) => {
+      if (!items.length) {
+        el.innerHTML = `<div class="empty-state showcase-empty"><p>Novidades chegando em breve ✨</p><a class="btn btn--ghost btn--sm" href="pages/catalogo.html">Ver catálogo</a></div>`;
+        return;
+      }
+      el.innerHTML = items.map((p) => renderProductCard(p, { formatPrice: fmt })).join('');
+      el.querySelectorAll('.product-card').forEach((c, i) => { c.setAttribute('data-reveal', ''); c.style.setProperty('--reveal-delay', `${i * .06}s`); });
+    };
+    const showcaseError = (el) => {
+      el.innerHTML = `<div class="empty-state showcase-empty"><p>Não foi possível carregar os produtos agora.</p><a class="btn btn--ghost btn--sm" href="pages/catalogo.html">Ir para a loja</a></div>`;
+    };
+
+    (async () => {
+      const featuredEl = document.querySelector('[data-showcase="featured"]');
+      const newEl = document.querySelector('[data-showcase="new"]');
+      try {
+        const store = await import(url('assets/js/store.js'));
+        const fmt = store.formatBRL;
+        const [featured, fresh, all] = await Promise.all([
+          store.getProducts({ featured: true, limit: 8 }),
+          store.getProducts({ lancamento: true, sort: 'lancamentos', limit: 4 }),
+          store.getProducts({}),
+        ]);
+        fillShowcase(featuredEl, featured.slice(0, 8), fmt);
+        fillShowcase(newEl, fresh.slice(0, 4), fmt);
+        const counts = all.reduce((m, p) => ((m[p.jogo] = (m[p.jogo] || 0) + 1), m), {});
+        renderGames(counts);
+      } catch (err) {
+        console.warn('[home] vitrines indisponíveis:', err);
+        showcaseError(featuredEl);
+        showcaseError(newEl);
+      }
+    })();
+
+    // ---------- Countdown ----------
+    const cd = document.querySelector('[data-countdown]');
+    if (cd) {
+      const target = new Date(cd.dataset.countdown).getTime();
+      const out = Object.fromEntries([...cd.querySelectorAll('[data-cd]')].map((n) => [n.dataset.cd, n]));
+      const pad = (n) => String(n).padStart(2, '0');
+      const tick = () => {
+        let s = Math.max(0, Math.floor((target - Date.now()) / 1000));
+        const d = Math.floor(s / 86400); s -= d * 86400;
+        const h = Math.floor(s / 3600); s -= h * 3600;
+        const m = Math.floor(s / 60); s -= m * 60;
+        out.d.textContent = pad(d); out.h.textContent = pad(h); out.m.textContent = pad(m); out.s.textContent = pad(s);
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    // ---------- Newsletter ----------
+    const form = document.querySelector('[data-newsletter]');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = form.querySelector('input');
+      const field = form.querySelector('[data-field]');
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim());
+      field.classList.toggle('is-invalid', !ok);
+      input.setAttribute('aria-invalid', String(!ok));
+      if (!ok) { input.focus(); return; }
+      const btn = form.querySelector('button');
+      const r = btn.getBoundingClientRect();
+      starBurst(r.left + r.width / 2, r.top + r.height / 2, 16);
+      confetti(50);
+      toast('Inscrição confirmada! Fique de olho no seu e-mail ✨');
+      form.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+[
+  {
+    "id": "jj001",
+    "slug": "booster-box-escarlate-violeta-chamas-obsidianas",
+    "nome": "Booster Box Escarlate & Violeta — Chamas Obsidianas",
+    "jogo": "pokemon",
+    "tipo": "booster-box",
+    "preco": 899.9,
+    "precoAntigo": 999.9,
+    "estoque": 6,
+    "destaque": true,
+    "lancamento": false,
+    "imagem": "assets/img/products/booster-box-escarlate-violeta-chamas-obsidianas.svg",
+    "galeria": [
+      "assets/img/products/booster-box-escarlate-violeta-chamas-obsidianas.svg",
+      "assets/img/products/booster-box-escarlate-violeta-chamas-obsidianas-2.svg",
+      "assets/img/products/booster-box-escarlate-violeta-chamas-obsidianas-3.svg"
+    ],
+    "descricao": "Caixa lacrada com 36 boosters da expansão Chamas Obsidianas. Ideal para abrir com os amigos ou montar o seu fichário completo."
+  },
+  {
+    "id": "jj002",
+    "slug": "elite-trainer-box-evolucoes-prismaticas",
+    "nome": "Elite Trainer Box — Evoluções Prismáticas",
+    "jogo": "pokemon",
+    "tipo": "etb",
+    "preco": 459.9,
+    "estoque": 4,
+    "destaque": true,
+    "lancamento": true,
+    "imagem": "assets/img/products/elite-trainer-box-evolucoes-prismaticas.svg",
+    "galeria": [
+      "assets/img/products/elite-trainer-box-evolucoes-prismaticas.svg",
+      "assets/img/products/elite-trainer-box-evolucoes-prismaticas-2.svg",
+      "assets/img/products/elite-trainer-box-evolucoes-prismaticas-3.svg"
+    ],
+    "descricao": "ETB com 9 boosters, 65 sleeves, 45 energias, dados, marcadores e caixa organizadora temática."
+  },
+  {
+    "id": "jj003",
+    "slug": "booster-avulso-coroa-estelar",
+    "nome": "Booster Avulso — Coroa Estelar",
+    "jogo": "pokemon",
+    "tipo": "booster",
+    "preco": 29.9,
+    "estoque": 120,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/booster-avulso-coroa-estelar.svg",
+    "galeria": [
+      "assets/img/products/booster-avulso-coroa-estelar.svg",
+      "assets/img/products/booster-avulso-coroa-estelar-2.svg",
+      "assets/img/products/booster-avulso-coroa-estelar-3.svg"
+    ],
+    "descricao": "Booster com 10 cartas da coleção Coroa Estelar, incluindo pelo menos 1 carta rara ou melhor."
+  },
+  {
+    "id": "jj004",
+    "slug": "charizard-ex-arte-especial-sir",
+    "nome": "Charizard ex — Arte Especial (SIR)",
+    "jogo": "pokemon",
+    "tipo": "carta-avulsa",
+    "preco": 649.9,
+    "precoAntigo": 720.0,
+    "estoque": 1,
+    "destaque": true,
+    "lancamento": false,
+    "raridade": "Special Illustration Rare",
+    "imagem": "assets/img/products/charizard-ex-arte-especial-sir.svg",
+    "galeria": [
+      "assets/img/products/charizard-ex-arte-especial-sir.svg",
+      "assets/img/products/charizard-ex-arte-especial-sir-2.svg",
+      "assets/img/products/charizard-ex-arte-especial-sir-3.svg"
+    ],
+    "descricao": "Carta avulsa em estado Near Mint, conferida e enviada em top loader com sleeve."
+  },
+  {
+    "id": "jj005",
+    "slug": "pikachu-promo-holografico",
+    "nome": "Pikachu Promo Holográfico",
+    "jogo": "pokemon",
+    "tipo": "carta-avulsa",
+    "preco": 79.9,
+    "estoque": 5,
+    "destaque": false,
+    "lancamento": false,
+    "raridade": "Promo",
+    "imagem": "assets/img/products/pikachu-promo-holografico.svg",
+    "galeria": [
+      "assets/img/products/pikachu-promo-holografico.svg",
+      "assets/img/products/pikachu-promo-holografico-2.svg",
+      "assets/img/products/pikachu-promo-holografico-3.svg"
+    ],
+    "descricao": "Carta promocional holográfica, estado Near Mint. Perfeita para colecionadores."
+  },
+  {
+    "id": "jj006",
+    "slug": "deck-batalha-de-liga-miraidon-ex",
+    "nome": "Deck Batalha de Liga — Miraidon ex",
+    "jogo": "pokemon",
+    "tipo": "deck",
+    "preco": 199.9,
+    "precoAntigo": 229.9,
+    "estoque": 10,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/deck-batalha-de-liga-miraidon-ex.svg",
+    "galeria": [
+      "assets/img/products/deck-batalha-de-liga-miraidon-ex.svg",
+      "assets/img/products/deck-batalha-de-liga-miraidon-ex-2.svg",
+      "assets/img/products/deck-batalha-de-liga-miraidon-ex-3.svg"
+    ],
+    "descricao": "Deck de 60 cartas pronto para torneio, com cartas-chave em quantidade competitiva."
+  },
+  {
+    "id": "jj007",
+    "slug": "booster-box-fundacoes-do-multiverso",
+    "nome": "Booster Box — Fundações do Multiverso",
+    "jogo": "magic",
+    "tipo": "booster-box",
+    "preco": 1149.9,
+    "estoque": 3,
+    "destaque": true,
+    "lancamento": true,
+    "imagem": "assets/img/products/booster-box-fundacoes-do-multiverso.svg",
+    "galeria": [
+      "assets/img/products/booster-box-fundacoes-do-multiverso.svg",
+      "assets/img/products/booster-box-fundacoes-do-multiverso-2.svg",
+      "assets/img/products/booster-box-fundacoes-do-multiverso-3.svg"
+    ],
+    "descricao": "Caixa com 36 Play Boosters. A melhor forma de jogar Draft e Selado com a nova coleção."
+  },
+  {
+    "id": "jj008",
+    "slug": "collector-booster-fundacoes-do-multiverso",
+    "nome": "Collector Booster — Fundações do Multiverso",
+    "jogo": "magic",
+    "tipo": "booster",
+    "preco": 189.9,
+    "estoque": 18,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/collector-booster-fundacoes-do-multiverso.svg",
+    "galeria": [
+      "assets/img/products/collector-booster-fundacoes-do-multiverso.svg",
+      "assets/img/products/collector-booster-fundacoes-do-multiverso-2.svg",
+      "assets/img/products/collector-booster-fundacoes-do-multiverso-3.svg"
+    ],
+    "descricao": "Booster premium com 15 cartas, várias foils e artes alternativas garantidas."
+  },
+  {
+    "id": "jj009",
+    "slug": "commander-deck-legioes-do-crepusculo",
+    "nome": "Commander Deck — Legiões do Crepúsculo",
+    "jogo": "magic",
+    "tipo": "deck",
+    "preco": 329.9,
+    "precoAntigo": 379.9,
+    "estoque": 7,
+    "destaque": true,
+    "lancamento": false,
+    "imagem": "assets/img/products/commander-deck-legioes-do-crepusculo.svg",
+    "galeria": [
+      "assets/img/products/commander-deck-legioes-do-crepusculo.svg",
+      "assets/img/products/commander-deck-legioes-do-crepusculo-2.svg",
+      "assets/img/products/commander-deck-legioes-do-crepusculo-3.svg"
+    ],
+    "descricao": "Deck pré-montado de 100 cartas para o formato Commander, com comandante foil exclusivo."
+  },
+  {
+    "id": "jj010",
+    "slug": "starter-kit-bem-vindo-a-magic",
+    "nome": "Starter Kit — Bem-vindo a Magic",
+    "jogo": "magic",
+    "tipo": "deck",
+    "preco": 119.9,
+    "estoque": 15,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/starter-kit-bem-vindo-a-magic.svg",
+    "galeria": [
+      "assets/img/products/starter-kit-bem-vindo-a-magic.svg",
+      "assets/img/products/starter-kit-bem-vindo-a-magic-2.svg",
+      "assets/img/products/starter-kit-bem-vindo-a-magic-3.svg"
+    ],
+    "descricao": "Dois decks prontos para jogar e aprender as regras. Ótimo presente para iniciantes."
+  },
+  {
+    "id": "jj011",
+    "slug": "dragao-ancestral-foil-borda-estendida",
+    "nome": "Dragão Ancestral Foil — Borda Estendida",
+    "jogo": "magic",
+    "tipo": "carta-avulsa",
+    "preco": 289.9,
+    "estoque": 2,
+    "destaque": false,
+    "lancamento": false,
+    "raridade": "Mítica Rara",
+    "imagem": "assets/img/products/dragao-ancestral-foil-borda-estendida.svg",
+    "galeria": [
+      "assets/img/products/dragao-ancestral-foil-borda-estendida.svg",
+      "assets/img/products/dragao-ancestral-foil-borda-estendida-2.svg",
+      "assets/img/products/dragao-ancestral-foil-borda-estendida-3.svg"
+    ],
+    "descricao": "Carta mítica foil com borda estendida, estado Near Mint."
+  },
+  {
+    "id": "jj012",
+    "slug": "play-booster-avulso-eco-das-ruinas",
+    "nome": "Play Booster Avulso — Eco das Ruínas",
+    "jogo": "magic",
+    "tipo": "booster",
+    "preco": 34.9,
+    "precoAntigo": 39.9,
+    "estoque": 80,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/play-booster-avulso-eco-das-ruinas.svg",
+    "galeria": [
+      "assets/img/products/play-booster-avulso-eco-das-ruinas.svg",
+      "assets/img/products/play-booster-avulso-eco-das-ruinas-2.svg",
+      "assets/img/products/play-booster-avulso-eco-das-ruinas-3.svg"
+    ],
+    "descricao": "Play Booster com 14 cartas, com chance de raras foil e cartas especiais."
+  },
+  {
+    "id": "jj013",
+    "slug": "booster-box-furia-das-sombras",
+    "nome": "Booster Box — Fúria das Sombras",
+    "jogo": "yugioh",
+    "tipo": "booster-box",
+    "preco": 549.9,
+    "precoAntigo": 619.9,
+    "estoque": 5,
+    "destaque": true,
+    "lancamento": false,
+    "imagem": "assets/img/products/booster-box-furia-das-sombras.svg",
+    "galeria": [
+      "assets/img/products/booster-box-furia-das-sombras.svg",
+      "assets/img/products/booster-box-furia-das-sombras-2.svg",
+      "assets/img/products/booster-box-furia-das-sombras-3.svg"
+    ],
+    "descricao": "Display com 24 boosters de 9 cartas. Inclui novos suportes para arquétipos populares."
+  },
+  {
+    "id": "jj014",
+    "slug": "structure-deck-guardioes-do-abismo",
+    "nome": "Structure Deck — Guardiões do Abismo",
+    "jogo": "yugioh",
+    "tipo": "deck",
+    "preco": 89.9,
+    "estoque": 20,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/structure-deck-guardioes-do-abismo.svg",
+    "galeria": [
+      "assets/img/products/structure-deck-guardioes-do-abismo.svg",
+      "assets/img/products/structure-deck-guardioes-do-abismo-2.svg",
+      "assets/img/products/structure-deck-guardioes-do-abismo-3.svg"
+    ],
+    "descricao": "Deck estrutural de 46 cartas pronto para duelar, com cartas exclusivas."
+  },
+  {
+    "id": "jj015",
+    "slug": "booster-avulso-reliquias-lendarias",
+    "nome": "Booster Avulso — Relíquias Lendárias",
+    "jogo": "yugioh",
+    "tipo": "booster",
+    "preco": 24.9,
+    "estoque": 150,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/booster-avulso-reliquias-lendarias.svg",
+    "galeria": [
+      "assets/img/products/booster-avulso-reliquias-lendarias.svg",
+      "assets/img/products/booster-avulso-reliquias-lendarias-2.svg",
+      "assets/img/products/booster-avulso-reliquias-lendarias-3.svg"
+    ],
+    "descricao": "Booster com 9 cartas, incluindo pelo menos 1 Super Rara ou melhor."
+  },
+  {
+    "id": "jj016",
+    "slug": "mago-do-eclipse-starlight-rare",
+    "nome": "Mago do Eclipse — Starlight Rare",
+    "jogo": "yugioh",
+    "tipo": "carta-avulsa",
+    "preco": 899.9,
+    "estoque": 1,
+    "destaque": true,
+    "lancamento": false,
+    "raridade": "Starlight Rare",
+    "imagem": "assets/img/products/mago-do-eclipse-starlight-rare.svg",
+    "galeria": [
+      "assets/img/products/mago-do-eclipse-starlight-rare.svg",
+      "assets/img/products/mago-do-eclipse-starlight-rare-2.svg",
+      "assets/img/products/mago-do-eclipse-starlight-rare-3.svg"
+    ],
+    "descricao": "Uma das raridades mais cobiçadas. Estado Near Mint, enviada em case magnético."
+  },
+  {
+    "id": "jj017",
+    "slug": "tin-de-colecionador-2026",
+    "nome": "Tin de Colecionador 2026",
+    "jogo": "yugioh",
+    "tipo": "booster",
+    "preco": 149.9,
+    "precoAntigo": 169.9,
+    "estoque": 12,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/tin-de-colecionador-2026.svg",
+    "galeria": [
+      "assets/img/products/tin-de-colecionador-2026.svg",
+      "assets/img/products/tin-de-colecionador-2026-2.svg",
+      "assets/img/products/tin-de-colecionador-2026-3.svg"
+    ],
+    "descricao": "Lata colecionável com 3 mega packs e cartas prismáticas exclusivas."
+  },
+  {
+    "id": "jj018",
+    "slug": "booster-box-ondas-do-novo-mundo-op-10",
+    "nome": "Booster Box — Ondas do Novo Mundo (OP-10)",
+    "jogo": "onepiece",
+    "tipo": "booster-box",
+    "preco": 689.9,
+    "estoque": 4,
+    "destaque": true,
+    "lancamento": true,
+    "imagem": "assets/img/products/booster-box-ondas-do-novo-mundo-op-10.svg",
+    "galeria": [
+      "assets/img/products/booster-box-ondas-do-novo-mundo-op-10.svg",
+      "assets/img/products/booster-box-ondas-do-novo-mundo-op-10-2.svg",
+      "assets/img/products/booster-box-ondas-do-novo-mundo-op-10-3.svg"
+    ],
+    "descricao": "Caixa com 24 boosters da expansão OP-10. Alta procura — estoque limitado!"
+  },
+  {
+    "id": "jj019",
+    "slug": "starter-deck-tripulacao-vermelha",
+    "nome": "Starter Deck — Tripulação Vermelha",
+    "jogo": "onepiece",
+    "tipo": "deck",
+    "preco": 79.9,
+    "precoAntigo": 89.9,
+    "estoque": 14,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/starter-deck-tripulacao-vermelha.svg",
+    "galeria": [
+      "assets/img/products/starter-deck-tripulacao-vermelha.svg",
+      "assets/img/products/starter-deck-tripulacao-vermelha-2.svg",
+      "assets/img/products/starter-deck-tripulacao-vermelha-3.svg"
+    ],
+    "descricao": "Deck inicial de 51 cartas com líder exclusivo, pronto para jogar."
+  },
+  {
+    "id": "jj020",
+    "slug": "booster-avulso-ondas-do-novo-mundo",
+    "nome": "Booster Avulso — Ondas do Novo Mundo",
+    "jogo": "onepiece",
+    "tipo": "booster",
+    "preco": 32.9,
+    "estoque": 90,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/booster-avulso-ondas-do-novo-mundo.svg",
+    "galeria": [
+      "assets/img/products/booster-avulso-ondas-do-novo-mundo.svg",
+      "assets/img/products/booster-avulso-ondas-do-novo-mundo-2.svg",
+      "assets/img/products/booster-avulso-ondas-do-novo-mundo-3.svg"
+    ],
+    "descricao": "Booster com 12 cartas da expansão OP-10."
+  },
+  {
+    "id": "jj021",
+    "slug": "capitao-do-chapeu-alt-art-manga",
+    "nome": "Capitão do Chapéu — Alt Art Mangá",
+    "jogo": "onepiece",
+    "tipo": "carta-avulsa",
+    "preco": 1299.9,
+    "estoque": 1,
+    "destaque": false,
+    "lancamento": false,
+    "raridade": "Manga Rare",
+    "imagem": "assets/img/products/capitao-do-chapeu-alt-art-manga.svg",
+    "galeria": [
+      "assets/img/products/capitao-do-chapeu-alt-art-manga.svg",
+      "assets/img/products/capitao-do-chapeu-alt-art-manga-2.svg",
+      "assets/img/products/capitao-do-chapeu-alt-art-manga-3.svg"
+    ],
+    "descricao": "Carta alternativa em estilo mangá, raridade altíssima. Estado Near Mint."
+  },
+  {
+    "id": "jj022",
+    "slug": "booster-box-ilha-encantada",
+    "nome": "Booster Box — Ilha Encantada",
+    "jogo": "lorcana",
+    "tipo": "booster-box",
+    "preco": 799.9,
+    "precoAntigo": 849.9,
+    "estoque": 5,
+    "destaque": true,
+    "lancamento": false,
+    "imagem": "assets/img/products/booster-box-ilha-encantada.svg",
+    "galeria": [
+      "assets/img/products/booster-box-ilha-encantada.svg",
+      "assets/img/products/booster-box-ilha-encantada-2.svg",
+      "assets/img/products/booster-box-ilha-encantada-3.svg"
+    ],
+    "descricao": "Display com 24 boosters de 12 cartas, com chance de Enchanted."
+  },
+  {
+    "id": "jj023",
+    "slug": "gift-set-iluminador-ilha-encantada",
+    "nome": "Gift Set Iluminador — Ilha Encantada",
+    "jogo": "lorcana",
+    "tipo": "etb",
+    "preco": 259.9,
+    "estoque": 8,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/gift-set-iluminador-ilha-encantada.svg",
+    "galeria": [
+      "assets/img/products/gift-set-iluminador-ilha-encantada.svg",
+      "assets/img/products/gift-set-iluminador-ilha-encantada-2.svg",
+      "assets/img/products/gift-set-iluminador-ilha-encantada-3.svg"
+    ],
+    "descricao": "Kit com 4 boosters, marcadores de dano, deck box e carta promo oversized."
+  },
+  {
+    "id": "jj024",
+    "slug": "starter-deck-rubi-safira",
+    "nome": "Starter Deck — Rubi & Safira",
+    "jogo": "lorcana",
+    "tipo": "deck",
+    "preco": 99.9,
+    "estoque": 11,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/starter-deck-rubi-safira.svg",
+    "galeria": [
+      "assets/img/products/starter-deck-rubi-safira.svg",
+      "assets/img/products/starter-deck-rubi-safira-2.svg",
+      "assets/img/products/starter-deck-rubi-safira-3.svg"
+    ],
+    "descricao": "Deck de 60 cartas bicolor pronto para jogar, com 2 cartas foil."
+  },
+  {
+    "id": "jj025",
+    "slug": "sleeves-holo-estelar-100-un",
+    "nome": "Sleeves Holo Estelar (100 un.)",
+    "jogo": "acessorios",
+    "tipo": "acessorio",
+    "preco": 49.9,
+    "precoAntigo": 59.9,
+    "estoque": 60,
+    "destaque": true,
+    "lancamento": false,
+    "imagem": "assets/img/products/sleeves-holo-estelar-100-un.svg",
+    "galeria": [
+      "assets/img/products/sleeves-holo-estelar-100-un.svg",
+      "assets/img/products/sleeves-holo-estelar-100-un-2.svg",
+      "assets/img/products/sleeves-holo-estelar-100-un-3.svg"
+    ],
+    "descricao": "100 sleeves tamanho padrão (66x91mm) com acabamento holográfico e verso estrelado JJ's."
+  },
+  {
+    "id": "jj026",
+    "slug": "playmat-jj-s-galaxia",
+    "nome": "Playmat JJ's Galáxia",
+    "jogo": "acessorios",
+    "tipo": "acessorio",
+    "preco": 129.9,
+    "estoque": 25,
+    "destaque": true,
+    "lancamento": true,
+    "imagem": "assets/img/products/playmat-jj-s-galaxia.svg",
+    "galeria": [
+      "assets/img/products/playmat-jj-s-galaxia.svg",
+      "assets/img/products/playmat-jj-s-galaxia-2.svg",
+      "assets/img/products/playmat-jj-s-galaxia-3.svg"
+    ],
+    "descricao": "Tapete de jogo 60x35cm em neoprene com base antiderrapante e bordas costuradas."
+  },
+  {
+    "id": "jj027",
+    "slug": "deck-box-nebulosa-100",
+    "nome": "Deck Box Nebulosa — 100+",
+    "jogo": "acessorios",
+    "tipo": "acessorio",
+    "preco": 69.9,
+    "estoque": 30,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/deck-box-nebulosa-100.svg",
+    "galeria": [
+      "assets/img/products/deck-box-nebulosa-100.svg",
+      "assets/img/products/deck-box-nebulosa-100-2.svg",
+      "assets/img/products/deck-box-nebulosa-100-3.svg"
+    ],
+    "descricao": "Deck box para até 100 cartas com sleeve duplo, fecho magnético e compartimento para dados."
+  },
+  {
+    "id": "jj028",
+    "slug": "fichario-9-bolsos-360-cartas",
+    "nome": "Fichário 9 Bolsos — 360 Cartas",
+    "jogo": "acessorios",
+    "tipo": "acessorio",
+    "preco": 159.9,
+    "precoAntigo": 179.9,
+    "estoque": 18,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/fichario-9-bolsos-360-cartas.svg",
+    "galeria": [
+      "assets/img/products/fichario-9-bolsos-360-cartas.svg",
+      "assets/img/products/fichario-9-bolsos-360-cartas-2.svg",
+      "assets/img/products/fichario-9-bolsos-360-cartas-3.svg"
+    ],
+    "descricao": "Fichário com zíper, 20 páginas de 9 bolsos com proteção lateral. Cabe 360 cartas."
+  },
+  {
+    "id": "jj029",
+    "slug": "top-loaders-rigidos-25-un",
+    "nome": "Top Loaders Rígidos (25 un.)",
+    "jogo": "acessorios",
+    "tipo": "acessorio",
+    "preco": 24.9,
+    "estoque": 100,
+    "destaque": false,
+    "lancamento": false,
+    "imagem": "assets/img/products/top-loaders-rigidos-25-un.svg",
+    "galeria": [
+      "assets/img/products/top-loaders-rigidos-25-un.svg",
+      "assets/img/products/top-loaders-rigidos-25-un-2.svg",
+      "assets/img/products/top-loaders-rigidos-25-un-3.svg"
+    ],
+    "descricao": "Protetores rígidos 3x4\" para suas cartas mais valiosas."
+  },
+  {
+    "id": "jj030",
+    "slug": "kit-dados-estelares-6-un",
+    "nome": "Kit Dados Estelares (6 un.)",
+    "jogo": "acessorios",
+    "tipo": "acessorio",
+    "preco": 39.9,
+    "estoque": 0,
+    "destaque": false,
+    "lancamento": true,
+    "imagem": "assets/img/products/kit-dados-estelares-6-un.svg",
+    "galeria": [
+      "assets/img/products/kit-dados-estelares-6-un.svg",
+      "assets/img/products/kit-dados-estelares-6-un-2.svg",
+      "assets/img/products/kit-dados-estelares-6-un-3.svg"
+    ],
+    "descricao": "Seis dados D6 em resina translúcida com glitter e estrela no lugar do número 6."
+  }
+]

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add("js")</script>
+  <title>Checkout — JJ's TCG</title>
+  <meta name="description" content="Finalize sua compra na JJ's TCG.">
+  <link rel="icon" href="../assets/img/logo.jpeg">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/shop.css">
+</head>
+<body data-page="checkout">
+  <header data-site-header></header>
+
+  <main class="shop-main" id="conteudo">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="../index.html">Início</a><span>/</span><a href="carrinho.html">Carrinho</a><span>/</span><span aria-current="page">Checkout</span></nav>
+      <div class="shop-head"><div><h1 class="display">Finalizar compra</h1><p class="muted">Pagamento 100% seguro · ambiente simulado</p></div></div>
+
+      <div data-checkout-empty hidden class="empty-state panel checkout-empty">
+        <p class="h2">Seu carrinho está vazio ✦</p>
+        <a class="btn btn--primary" href="catalogo.html">Explorar a loja</a>
+      </div>
+
+      <div class="checkout-layout" data-checkout>
+        <form class="checkout-form" id="checkout-form" novalidate>
+          <!-- 1. Dados -->
+          <section class="checkout-step panel" aria-labelledby="st1">
+            <h2 id="st1"><span class="step-num">1</span> Seus dados</h2>
+            <div class="form-grid">
+              <label class="field field--full"><span class="field__label">Nome completo</span>
+                <input class="input" name="nome" autocomplete="name" required minlength="5" placeholder="Maria da Silva">
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">E-mail</span>
+                <input class="input" name="email" type="email" autocomplete="email" required placeholder="voce@email.com">
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">Celular</span>
+                <input class="input" name="telefone" type="tel" autocomplete="tel-national" inputmode="numeric" required data-mask="phone" placeholder="(11) 91234-5678">
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">CPF</span>
+                <input class="input" name="cpf" inputmode="numeric" required data-mask="cpf" placeholder="000.000.000-00">
+                <span class="field__error"></span></label>
+            </div>
+          </section>
+
+          <!-- 2. Entrega -->
+          <section class="checkout-step panel" aria-labelledby="st2">
+            <h2 id="st2"><span class="step-num">2</span> Entrega</h2>
+            <div class="form-grid">
+              <div class="field field--full">
+                <div class="cep-row">
+                  <label class="field"><span class="field__label">CEP</span>
+                    <input class="input" name="cep" inputmode="numeric" autocomplete="postal-code" required data-mask="cep" placeholder="00000-000">
+                    <span class="field__error"></span></label>
+                  <button class="btn btn--outline" type="button" data-cep-search>Buscar</button>
+                </div>
+                <p class="cep-status" data-cep-status aria-live="polite"><a href="https://buscacepinter.correios.com.br/" target="_blank" rel="noopener">Não sei meu CEP</a></p>
+              </div>
+              <label class="field field--full"><span class="field__label">Endereço</span>
+                <input class="input" name="rua" autocomplete="address-line1" required placeholder="Rua, avenida…">
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">Número</span>
+                <input class="input" name="numero" inputmode="numeric" required placeholder="123">
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">Complemento <span class="muted">(opcional)</span></span>
+                <input class="input" name="complemento" autocomplete="address-line2" placeholder="Apto, bloco…"></label>
+              <label class="field"><span class="field__label">Bairro</span>
+                <input class="input" name="bairro" required>
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">Cidade</span>
+                <input class="input" name="cidade" autocomplete="address-level2" required>
+                <span class="field__error"></span></label>
+              <label class="field"><span class="field__label">Estado</span>
+                <select class="select" name="uf" autocomplete="address-level1" required data-uf>
+                  <option value="">Selecione</option>
+                </select>
+                <span class="field__error"></span></label>
+            </div>
+
+            <fieldset class="options" style="border:0;padding:0;margin:0">
+              <legend class="field__label" style="margin-bottom:var(--sp-2)">Forma de envio</legend>
+              <div data-shipping-options class="options"></div>
+            </fieldset>
+          </section>
+
+          <!-- 3. Pagamento -->
+          <section class="checkout-step panel" aria-labelledby="st3">
+            <h2 id="st3"><span class="step-num">3</span> Pagamento</h2>
+            <div class="pay-tabs" role="radiogroup" aria-label="Forma de pagamento">
+              <label class="option"><input type="radio" name="pagamento" value="pix" checked><span class="pay-icon" aria-hidden="true">⚡</span><span class="option__title">Pix</span><span class="option__sub">5% off</span></label>
+              <label class="option"><input type="radio" name="pagamento" value="cartao"><span class="pay-icon" aria-hidden="true">💳</span><span class="option__title">Cartão</span><span class="option__sub">até 10x</span></label>
+              <label class="option"><input type="radio" name="pagamento" value="boleto"><span class="pay-icon" aria-hidden="true">🧾</span><span class="option__title">Boleto</span><span class="option__sub">1 a 3 dias</span></label>
+            </div>
+
+            <div class="pay-panel" data-pay-panel="pix">
+              <p class="pay-note">Ao confirmar, geramos um QR Code Pix válido por 30 minutos. <strong>5% de desconto</strong> aplicado no total.</p>
+            </div>
+
+            <div class="pay-panel" data-pay-panel="cartao" hidden>
+              <div class="card-preview" aria-hidden="true">
+                <span class="card-preview__brand" data-card-brand>JJ'S CARD</span>
+                <span class="card-preview__num" data-card-num>•••• •••• •••• ••••</span>
+                <div class="card-preview__row"><span data-card-name>NOME NO CARTÃO</span><span data-card-exp>MM/AA</span></div>
+              </div>
+              <div class="form-grid">
+                <label class="field field--full"><span class="field__label">Número do cartão</span>
+                  <input class="input" name="cartaoNumero" inputmode="numeric" autocomplete="cc-number" data-mask="card" placeholder="0000 0000 0000 0000" data-pay-required="cartao">
+                  <span class="field__error"></span></label>
+                <label class="field field--full"><span class="field__label">Nome impresso no cartão</span>
+                  <input class="input" name="cartaoNome" autocomplete="cc-name" placeholder="MARIA D SILVA" data-pay-required="cartao">
+                  <span class="field__error"></span></label>
+                <label class="field"><span class="field__label">Validade</span>
+                  <input class="input" name="cartaoValidade" inputmode="numeric" autocomplete="cc-exp" data-mask="exp" placeholder="MM/AA" data-pay-required="cartao">
+                  <span class="field__error"></span></label>
+                <label class="field"><span class="field__label">CVV</span>
+                  <input class="input" name="cartaoCvv" inputmode="numeric" autocomplete="cc-csc" data-mask="cvv" placeholder="123" data-pay-required="cartao">
+                  <span class="field__error"></span></label>
+                <label class="field field--full"><span class="field__label">Parcelas</span>
+                  <select class="select" name="parcelas" data-installments></select></label>
+              </div>
+              <p class="pay-note">🔒 Simulação: nenhum dado de cartão é enviado ou armazenado. Teste com 4111 1111 1111 1111.</p>
+            </div>
+
+            <div class="pay-panel" data-pay-panel="boleto" hidden>
+              <p class="pay-note">O boleto é gerado após a confirmação e vence em 3 dias úteis. O pedido é separado após a compensação.</p>
+            </div>
+          </section>
+
+          <p class="form-error-summary" data-form-error role="alert"></p>
+        </form>
+
+        <aside class="summary panel" aria-label="Resumo do pedido">
+          <h2>Seu pedido</h2>
+          <ul class="summary__items" data-summary-items></ul>
+          <div class="divider"></div>
+          <dl class="summary__rows" data-summary-rows></dl>
+          <button class="btn btn--primary btn--lg btn--block" type="submit" form="checkout-form" data-submit>Confirmar pedido</button>
+          <a class="btn btn--ghost btn--sm btn--block" href="carrinho.html">← Voltar ao carrinho</a>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script type="module" src="../assets/js/ui.js"></script>
+  <script type="module" src="../assets/js/cart.js"></script>
+  <script type="module" src="../assets/js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add("js")</script>
+  <title>Produto — JJ's TCG</title>
+  <meta name="description" content="Detalhes do produto na JJ's TCG.">
+  <link rel="icon" href="../assets/img/logo.jpeg">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/shop.css">
+</head>
+<body data-page="produto">
+  <header data-site-header></header>
+
+  <main class="shop-main" id="conteudo">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Você está em" data-pdp-crumb>
+        <a href="../index.html">Início</a><span>/</span><a href="catalogo.html">Loja</a>
+      </nav>
+
+      <div data-pdp>
+        <div class="pdp-skeleton"><p class="muted">Carregando produto…</p></div>
+      </div>
+
+      <section class="related section" aria-labelledby="rel-title" data-related hidden>
+        <div class="section-head section-head--split">
+          <div>
+            <span class="section-kicker">Você também vai curtir</span>
+            <h2 class="section-title" id="rel-title">Produtos relacionados</h2>
+          </div>
+          <a class="btn btn--ghost btn--sm" href="catalogo.html" data-related-more>Ver todos</a>
+        </div>
+        <div class="product-grid" data-related-grid></div>
+      </section>
+    </div>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script type="module" src="../assets/js/ui.js"></script>
+  <script type="module" src="../assets/js/cart.js"></script>
+  <script type="module" src="../assets/js/product.js"></script>
+</body>
+</html>

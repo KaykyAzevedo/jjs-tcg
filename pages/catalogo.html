@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add("js")</script>
+  <title>Loja — JJ's TCG</title>
+  <meta name="description" content="Booster boxes, boosters, ETBs, cartas avulsas, decks e acessórios de Pokémon, Magic, Yu-Gi-Oh!, One Piece e Lorcana.">
+  <link rel="icon" href="../assets/img/logo.jpeg">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/shop.css">
+</head>
+<body data-page="catalogo">
+  <header data-site-header></header>
+
+  <main class="shop-main" id="conteudo">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="../index.html">Início</a><span>/</span><span aria-current="page" data-crumb>Loja</span></nav>
+
+      <div class="shop-head">
+        <div>
+          <h1 class="display" data-catalog-title>Loja</h1>
+          <p class="muted" data-catalog-sub>Tudo para o seu próximo duelo — e para a sua coleção.</p>
+        </div>
+      </div>
+
+      <div class="catalog">
+        <aside class="filters panel" id="filtros" aria-label="Filtros">
+          <div class="filters__head">
+            <strong class="h3">Filtros</strong>
+            <button class="btn btn--ghost btn--icon btn--sm" type="button" data-filters-close aria-label="Fechar filtros">×</button>
+          </div>
+
+          <fieldset class="filters__group">
+            <legend class="filters__title">Jogo</legend>
+            <div class="chip-group" data-filter-jogo></div>
+          </fieldset>
+
+          <fieldset class="filters__group">
+            <legend class="filters__title">Tipo</legend>
+            <div class="chip-group" data-filter-tipo></div>
+          </fieldset>
+
+          <fieldset class="filters__group">
+            <legend class="filters__title">Faixa de preço</legend>
+            <div class="chip-group" data-filter-faixa>
+              <button class="chip" type="button" aria-pressed="false" data-min="" data-max="50">Até R$ 50</button>
+              <button class="chip" type="button" aria-pressed="false" data-min="50" data-max="200">R$ 50–200</button>
+              <button class="chip" type="button" aria-pressed="false" data-min="200" data-max="600">R$ 200–600</button>
+              <button class="chip" type="button" aria-pressed="false" data-min="600" data-max="">Acima de R$ 600</button>
+            </div>
+            <div class="filters__price">
+              <label class="field"><span class="field__label">Mín. (R$)</span><input class="input" type="number" inputmode="numeric" min="0" step="10" placeholder="0" data-filter-min></label>
+              <label class="field"><span class="field__label">Máx. (R$)</span><input class="input" type="number" inputmode="numeric" min="0" step="10" placeholder="∞" data-filter-max></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="filters__group">
+            <legend class="filters__title">Disponibilidade</legend>
+            <label class="check"><input type="checkbox" data-filter-stock> Somente em estoque</label>
+          </fieldset>
+
+          <button class="btn btn--outline btn--block btn--sm" type="button" data-filters-clear>Limpar filtros</button>
+        </aside>
+
+        <section aria-label="Produtos">
+          <div class="toolbar">
+            <button class="btn btn--outline btn--sm filters-toggle" type="button" data-filters-open aria-controls="filtros" aria-expanded="false">☰ Filtros</button>
+            <label class="toolbar__search">
+              <span class="sr-only">Buscar produtos</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input class="input" type="search" placeholder="Buscar: Charizard, sleeves, commander…" data-filter-q autocomplete="off">
+            </label>
+            <label class="toolbar__sort">
+              <span class="sr-only">Ordenar por</span>
+              <select class="select" data-filter-sort></select>
+            </label>
+            <p class="toolbar__count" data-catalog-count aria-live="polite">Carregando produtos…</p>
+          </div>
+
+          <div class="active-filters" data-active-filters></div>
+          <div class="product-grid" data-catalog-grid></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script type="module" src="../assets/js/ui.js"></script>
+  <script type="module" src="../assets/js/cart.js"></script>
+  <script type="module" src="../assets/js/catalog.js"></script>
+</body>
+</html>

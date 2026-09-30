@@ -1,0 +1,136 @@
+/* =========================================================
+   JJ's TCG — Design tokens (dono: Prisma / Design)
+   Paleta extraída de assets/img/logo.jpeg
+   ========================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* ---- Marca ---- */
+  --c-violet: #7B4FF0;
+  --c-lilac: #A968C9;
+  --c-rose: #C9788F;
+  --c-peach: #E8925F;
+  --c-hotpink: #FF4FD8;
+  --c-orange: #FF7A45;
+  --c-gold: #FFD21F;
+  --c-cream: #FFEBC8;
+  --c-ink: #1A0F24;
+  --c-night: #120A1E;
+
+  /* ---- Superfícies (tema escuro) ---- */
+  --c-bg: var(--c-night);
+  --c-bg-2: #1A1029;
+  --c-surface: #211533;
+  --c-surface-2: #2B1C42;
+  --c-border: rgba(255, 235, 200, 0.10);
+  --c-border-strong: rgba(255, 235, 200, 0.22);
+  --c-text: #F6EEFF;
+  --c-text-muted: #B9A8CF;
+  --c-text-dim: #9D8DB5; /* AA (>=4.5:1) sobre --c-surface */
+
+  /* ---- Estados ---- */
+  --c-success: #3DDC97;
+  --c-danger: #FF5470;
+  --c-warning: var(--c-gold);
+  --c-info: #6FB6FF;
+
+  /* ---- Cores por jogo ---- */
+  --game-pokemon: #FFD21F;
+  --game-magic: #FF7A45;
+  --game-yugioh: #A968C9;
+  --game-onepiece: #FF5470;
+  --game-lorcana: #6FB6FF;
+  --game-acessorios: #3DDC97;
+
+  /* ---- Degradês ---- */
+  --grad-bg: linear-gradient(90deg, #7B4FF0, #A968C9 35%, #C9788F 65%, #E8925F);
+  --grad-star: linear-gradient(45deg, #FF4FD8, #FF7A45 55%, #FFD21F);
+  --grad-star-h: linear-gradient(90deg, #FF4FD8, #FF7A45 55%, #FFD21F);
+  --grad-surface: linear-gradient(160deg, rgba(123, 79, 240, 0.16), rgba(232, 146, 95, 0.06) 60%, transparent);
+  --grad-foil: linear-gradient(115deg,
+      transparent 20%,
+      rgba(255, 79, 216, 0.55) 36%,
+      rgba(255, 210, 31, 0.55) 46%,
+      rgba(111, 182, 255, 0.55) 56%,
+      rgba(61, 220, 151, 0.45) 64%,
+      transparent 80%);
+
+  /* ---- Tipografia ---- */
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem);
+  --fs-2xl: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --fs-3xl: clamp(2.6rem, 1.6rem + 5vw, 6rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.2;
+  --lh-body: 1.6;
+
+  /* Sombra escalonada tipo logo ("eco" 3D) */
+  --shadow-echo: 3px 3px 0 var(--c-ink), 6px 6px 0 rgba(26, 15, 36, 0.75), 9px 9px 0 rgba(26, 15, 36, 0.45);
+  --shadow-echo-sm: 2px 2px 0 var(--c-ink), 4px 4px 0 rgba(26, 15, 36, 0.6);
+
+  /* ---- Espaçamento ---- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --section-y: clamp(3.5rem, 2rem + 6vw, 7rem);
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2rem);
+  --container: 1240px;
+
+  /* ---- Raios ---- */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* ---- Sombras / glows ---- */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 30px -8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+  --glow-pink: 0 0 24px rgba(255, 79, 216, 0.45);
+  --glow-gold: 0 0 28px rgba(255, 210, 31, 0.45);
+  --glow-violet: 0 0 40px rgba(123, 79, 240, 0.45);
+  --glow-star: 0 8px 30px -6px rgba(255, 79, 216, 0.55), 0 4px 18px -4px rgba(255, 122, 69, 0.5);
+
+  /* ---- Movimento ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur: 280ms;
+  --dur-slow: 600ms;
+
+  /* ---- Camadas ---- */
+  --z-base: 1;
+  --z-header: 100;
+  --z-drawer: 200;
+  --z-toast: 300;
+  --z-cursor: 900;
+  --z-preloader: 1000;
+
+  --header-h: 72px;
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}

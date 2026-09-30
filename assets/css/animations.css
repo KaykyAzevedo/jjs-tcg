@@ -1,0 +1,123 @@
+/* =========================================================
+   JJ's TCG — Animações (dono: Prisma / Design)
+   Tudo que é transform/opacity (compositor-friendly).
+   Reduced motion desliga tudo no final do arquivo.
+   ========================================================= */
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-rev { to { transform: rotate(-360deg); } }
+
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--rot, 0deg)); }
+  50% { transform: translate3d(0, -18px, 0) rotate(calc(var(--rot, 0deg) + 2deg)); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50% { opacity: .9; transform: scale(1.08); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: .15; transform: scale(.6); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shine {
+  from { transform: translateX(-120%) skewX(-20deg); }
+  to { transform: translateX(220%) skewX(-20deg); }
+}
+
+@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
+
+@keyframes grad-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.45); }
+  60% { transform: scale(.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translate3d(0, 16px, 0) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes spark {
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(0); }
+  100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0) scale(.2) rotate(var(--rz, 180deg)); }
+}
+
+@keyframes star-fall {
+  0% { transform: translate3d(0, -10vh, 0) rotate(0); opacity: 1; }
+  100% { transform: translate3d(var(--drift, 0), 110vh, 0) rotate(var(--rz, 540deg)); opacity: .9; }
+}
+
+@keyframes skeleton {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* ---------- Utilitários ---------- */
+.anim-spin { animation: spin 18s linear infinite; }
+.anim-float { animation: float 6s var(--ease-in-out) infinite; }
+.anim-twinkle { animation: twinkle 2.4s ease-in-out infinite; }
+.anim-fade-up { animation: fade-up .7s var(--ease-out) both; }
+
+/* Reveal: estado inicial só quando JS está ativo (html.js), evita conteúdo invisível sem JS */
+.js [data-reveal] { opacity: 0; transform: translate3d(0, 32px, 0); }
+.js [data-reveal="fade"] { transform: none; }
+.js [data-reveal="scale"] { transform: scale(.94); }
+.js [data-reveal="left"] { transform: translate3d(-40px, 0, 0); }
+.js [data-reveal="right"] { transform: translate3d(40px, 0, 0); }
+.js [data-reveal].is-revealed { opacity: 1; transform: none; transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); transition-delay: var(--reveal-delay, 0s); }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--c-surface) 25%, var(--c-surface-2) 50%, var(--c-surface) 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.4s linear infinite;
+  border-radius: var(--r-md);
+}
+
+/* ---------- Transição de página ---------- */
+.page-transition {
+  position: fixed; inset: 0;
+  z-index: var(--z-preloader);
+  pointer-events: none;
+  display: grid; place-items: center;
+  background: var(--grad-bg);
+  clip-path: circle(0% at var(--px, 50%) var(--py, 50%));
+  transition: clip-path .55s var(--ease-in-out);
+}
+.page-transition.is-active { clip-path: circle(150% at var(--px, 50%) var(--py, 50%)); pointer-events: all; }
+.page-transition__star { width: 72px; height: 72px; animation: spin 1.2s linear infinite; filter: drop-shadow(0 0 20px rgba(255, 210, 31, .6)); }
+
+/* Entrada da página */
+.js body.is-entering main { animation: fade-up .6s var(--ease-out) both; }
+
+/* Pausa animações de seções fora da tela (ui.js adiciona .is-paused) */
+.is-paused, .is-paused * { animation-play-state: paused !important; }
+
+/* Camadas próprias p/ elementos em loop (compositor, sem repaint) */
+.anim-spin, .preloader__star, .page-transition__star { will-change: transform; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js [data-reveal] { opacity: 1; transform: none; }
+  .marquee__track { animation: none !important; }
+}
